@@ -159,18 +159,17 @@ namespace Unity.LEGO.Minifig
             Wave = 49
         }
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         Transform leftArmTip = null;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         Transform rightArmTip = null;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         Transform leftLegTip = null;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         Transform rightLegTip = null;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         Transform head = null;
 
-        Minifig minifig;
         CharacterController controller;
         Animator animator;
         AudioSource audioSource;
@@ -220,7 +219,6 @@ namespace Unity.LEGO.Minifig
 
         void Awake()
         {
-            minifig = GetComponent<Minifig>();
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
@@ -678,29 +676,7 @@ namespace Unity.LEGO.Minifig
             controller.enabled = true;
         }
 
-        public void Explode()
-        {
-            const float horizontalVelocityTransferRatio = 0.35f;
-            const float verticalVelocityTransferRatio = 0.1f;
-            const float angularVelocityTransferRatio = 1.0f;
-
-            if (!exploded)
-            {
-                exploded = true;
-                animator.enabled = false;
-                controller.enabled = false;
-
-                var transferredSpeed = Vector3.Scale(moveDelta + externalMotion, new Vector3(horizontalVelocityTransferRatio, verticalVelocityTransferRatio, horizontalVelocityTransferRatio));
-                var transferredAngularSpeed = (rotateSpeed + externalRotation) * angularVelocityTransferRatio;
-
-                if (explodeAudioClip)
-                {
-                    audioSource.PlayOneShot(explodeAudioClip);
-                }
-
-                MinifigExploder.Explode(minifig, leftArmTip, rightArmTip, leftLegTip, rightLegTip, head, transferredSpeed, transferredAngularSpeed);
-            }
-        }
+        
 
         public void MoveTo(Vector3 destination, float minDistance = 0.0f, Action onComplete = null, float onCompleteDelay = 0.0f,
             float moveDelay = 0.0f, bool cancelSpecial = true, float speedMultiplier = 1.0f, float rotationSpeedMultiplier = 1.0f, Vector3? turnToWhileCompleting = null)
