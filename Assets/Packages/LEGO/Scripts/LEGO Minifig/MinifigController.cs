@@ -15,12 +15,6 @@ namespace Unity.LEGO.Minifig
         const float distanceEpsilon = 0.1f;
         const float angleEpsilon = 0.1f;
 
-        // Input type for controlling the minifig.
-        enum InputType
-        {
-            Tank,
-            Direct
-        }
 
         // Internal classes used to define targets when automatically animating.
         class MoveTarget
@@ -98,8 +92,6 @@ namespace Unity.LEGO.Minifig
         public AudioClip explodeAudioClip;
 
         [Header("Controls")]
-        [SerializeField]
-        InputType inputType = InputType.Tank;
         [SerializeField]
         bool inputEnabled = true;
         [SerializeField, Range(0, 10)]
@@ -240,103 +232,67 @@ namespace Unity.LEGO.Minifig
             // Handle input.
             if (inputEnabled)
             {
-                switch (inputType)
+                // Calculate direct speed and speed.
+                var right = Vector3.right;
+                var forward = Vector3.forward;
+                if (Camera.main)
                 {
-                    case InputType.Tank:
-                        {
-                            // Calculate speed.
-                            var targetSpeed = Input.GetAxisRaw("Vertical");
-                            targetSpeed *= targetSpeed > 0 ? maxForwardSpeed : maxBackwardSpeed;
-                            if (targetSpeed > speed)
-                            {
-                                speed = Mathf.Min(targetSpeed, speed + acceleration * Time.deltaTime);
-                            }
-                            else if (targetSpeed < speed)
-                            {
-                                speed = Mathf.Max(targetSpeed, speed - acceleration * Time.deltaTime);
-                            }
-
-                            // Calculate rotation speed.
-                            var targetRotateSpeed = Input.GetAxisRaw("Horizontal");
-                            targetRotateSpeed *= maxRotateSpeed;
-                            if (targetRotateSpeed > rotateSpeed)
-                            {
-                                rotateSpeed = Mathf.Min(targetRotateSpeed, rotateSpeed + rotateAcceleration * Time.deltaTime);
-                            }
-                            else if (targetRotateSpeed < rotateSpeed)
-                            {
-                                rotateSpeed = Mathf.Max(targetRotateSpeed, rotateSpeed - rotateAcceleration * Time.deltaTime);
-                            }
-
-                            // Calculate move delta.
-                            moveDelta = new Vector3(0, moveDelta.y, speed);
-                            moveDelta = transform.TransformDirection(moveDelta);
-                            break;
-                        }
-                    case InputType.Direct:
-                        {
-                            // Calculate direct speed and speed.
-                            var right = Vector3.right;
-                            var forward = Vector3.forward;
-                            if (Camera.main)
-                            {
-                                right = Camera.main.transform.right;
-                                right.y = 0.0f;
-                                right.Normalize();
-                                forward = Camera.main.transform.forward;
-                                forward.y = 0.0f;
-                                forward.Normalize();
-                            }
-
-                            var targetSpeed = right * Input.GetAxisRaw("Horizontal");
-                            targetSpeed += forward * Input.GetAxisRaw("Vertical");
-                            if (targetSpeed.sqrMagnitude > 0.0f)
-                            {
-                                targetSpeed.Normalize();
-                            }
-                            targetSpeed *= maxForwardSpeed;
-
-                            var speedDiff = targetSpeed - directSpeed;
-                            if (speedDiff.sqrMagnitude < acceleration * acceleration * Time.deltaTime * Time.deltaTime)
-                            {
-                                directSpeed = targetSpeed;
-                            }
-                            else if (speedDiff.sqrMagnitude > 0.0f)
-                            {
-                                speedDiff.Normalize();
-
-                                directSpeed += speedDiff * acceleration * Time.deltaTime;
-                            }
-                            speed = directSpeed.magnitude;
-
-                            // Calculate rotation speed - ignore rotate acceleration.
-                            rotateSpeed = 0.0f;
-                            if (targetSpeed.sqrMagnitude > 0.0f)
-                            {
-                                var localTargetSpeed = transform.InverseTransformDirection(targetSpeed);
-                                var angleDiff = Vector3.SignedAngle(Vector3.forward, localTargetSpeed.normalized, Vector3.up);
-
-                                if (angleDiff > 0.0f)
-                                {
-                                    rotateSpeed = maxRotateSpeed;
-                                }
-                                else if (angleDiff < 0.0f)
-                                {
-                                    rotateSpeed = -maxRotateSpeed;
-                                }
-
-                                // Assumes that x > NaN is false - otherwise we need to guard against Time.deltaTime being zero.
-                                if (Mathf.Abs(rotateSpeed) > Mathf.Abs(angleDiff) / Time.deltaTime)
-                                {
-                                    rotateSpeed = angleDiff / Time.deltaTime;
-                                }
-                            }
-
-                            // Calculate move delta.
-                            moveDelta = new Vector3(directSpeed.x, moveDelta.y, directSpeed.z);
-                            break;
-                        }
+                    right = Camera.main.transform.right;
+                    right.y = 0.0f;
+                    right.Normalize();
+                    forward = Camera.main.transform.forward;
+                    forward.y = 0.0f;
+                    forward.Normalize();
                 }
+
+                var targetSpeed = right * Input.GetAxisRaw("Horizontal");
+                targetSpeed += forward * Input.GetAxisRaw("Vertical");
+                if (targetSpeed.sqrMagnitude > 0.0f)
+                {
+                    targetSpeed.Normalize();
+                }
+                targetSpeed *= maxForwardSpeed;
+
+                var speedDiff = targetSpeed - directSpeed;
+                if (speedDiff.sqrMagnitude < acceleration * acceleration * Time.deltaTime * Time.deltaTime)
+                {
+                    directSpeed = targetSpeed;
+                }
+                else if (speedDiff.sqrMagnitude > 0.0f)
+                {
+                    speedDiff.Normalize();
+
+                    directSpeed += speedDiff * acceleration * Time.deltaTime;
+                }
+                speed = directSpeed.magnitude;
+
+                // Calculate rotation speed - ignore rotate acceleration.
+                rotateSpeed = 0.0f;
+                if (targetSpeed.sqrMagnitude > 0.0f)
+                {
+                    var localTargetSpeed = transform.InverseTransformDirection(targetSpeed);
+                    var angleDiff = Vector3.SignedAngle(Vector3.forward, localTargetSpeed.normalized, Vector3.up);
+
+                    if (angleDiff > 0.0f)
+                    {
+                        rotateSpeed = maxRotateSpeed;
+                    }
+                    else if (angleDiff < 0.0f)
+                    {
+                        rotateSpeed = -maxRotateSpeed;
+                    }
+
+                    // Assumes that x > NaN is false - otherwise we need to guard against Time.deltaTime being zero.
+                    if (Mathf.Abs(rotateSpeed) > Mathf.Abs(angleDiff) / Time.deltaTime)
+                    {
+                        rotateSpeed = angleDiff / Time.deltaTime;
+                    }
+                }
+
+                // Calculate move delta.
+                moveDelta = new Vector3(directSpeed.x, moveDelta.y, directSpeed.z);
+
+
 
                 // Check if player is grounded.
                 if (!airborne)
@@ -676,7 +632,7 @@ namespace Unity.LEGO.Minifig
             controller.enabled = true;
         }
 
-        
+
 
         public void MoveTo(Vector3 destination, float minDistance = 0.0f, Action onComplete = null, float onCompleteDelay = 0.0f,
             float moveDelay = 0.0f, bool cancelSpecial = true, float speedMultiplier = 1.0f, float rotationSpeedMultiplier = 1.0f, Vector3? turnToWhileCompleting = null)
