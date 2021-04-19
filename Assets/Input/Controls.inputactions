@@ -1,0 +1,39 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Ingame",
+            "id": "2dbbee5f-7cb3-4f43-ba0a-c314a530f6b5",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "7cadbbe1-a690-46ab-a2dc-1a02b471dfeb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "97c86f9e-017a-4d2c-ac24-021b9c1a9ed0",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "WASD",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "WASD",
+            "bindingGroup": "WASD",
+            "devices": []
+        }
+    ]
+}
