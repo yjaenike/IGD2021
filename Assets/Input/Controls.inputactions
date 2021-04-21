@@ -1241,7 +1241,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "OKLÖ",
+                    "name": "PLÖÄ",
                     "id": "2fef9144-5a64-468e-85df-5b69303b59ca",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
@@ -1254,10 +1254,10 @@
                 {
                     "name": "up",
                     "id": "c6c0cda4-f125-44a2-9048-1c1d6e1e3543",
-                    "path": "<Keyboard>/o",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardZGHJ",
+                    "groups": "KeyboardPLÖÄ",
                     "action": "MoveDpad",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -1265,10 +1265,10 @@
                 {
                     "name": "down",
                     "id": "2a619ca6-6a94-43ad-90f9-242b20264c22",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/semicolon",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardZGHJ",
+                    "groups": "KeyboardPLÖÄ",
                     "action": "MoveDpad",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -1276,10 +1276,10 @@
                 {
                     "name": "left",
                     "id": "2e6fc7f4-e77e-4f8b-b172-63eb4687a2ea",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardZGHJ",
+                    "groups": "KeyboardPLÖÄ",
                     "action": "MoveDpad",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -1287,10 +1287,10 @@
                 {
                     "name": "right",
                     "id": "340715a1-ef7d-4498-b64e-063a79a96b7b",
-                    "path": "<Keyboard>/semicolon",
+                    "path": "<Keyboard>/quote",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardZGHJ",
+                    "groups": "KeyboardPLÖÄ",
                     "action": "MoveDpad",
                     "isComposite": false,
                     "isPartOfComposite": true
