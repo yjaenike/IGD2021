@@ -222,6 +222,12 @@ public class MinifigController : MonoBehaviour
         controller.Move(Vector3.down * 0.01f);
     }
 
+    private void Start()
+    {
+        string controlScheme = GetComponent<PlayerInput>().defaultControlScheme;
+        GetComponent<PlayerInput>().SwitchCurrentControlScheme(controlScheme, Keyboard.current);
+    }
+
     void Update()
     {
         if (exploded)

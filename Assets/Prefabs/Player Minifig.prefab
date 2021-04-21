@@ -3067,9 +3067,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: 3adf9f16-1260-4c9d-82dc-41c3961a53ba
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: KeyboardWASD
+  m_DefaultActionMap: Ingame
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &4427260138957941312
