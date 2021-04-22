@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class MinifigController : MonoBehaviour
 {
+    public GameObject Minifig;
     // Constants.
     const float stickyTime = 0.05f;
     const float stickyForce = 9.6f;
@@ -151,16 +152,6 @@ public class MinifigController : MonoBehaviour
         Wave = 49
     }
 
-    [SerializeField]
-    Transform leftArmTip = null;
-    [SerializeField]
-    Transform rightArmTip = null;
-    [SerializeField]
-    Transform leftLegTip = null;
-    [SerializeField]
-    Transform rightLegTip = null;
-    [SerializeField]
-    Transform head = null;
 
     CharacterController controller;
     Animator animator;
@@ -212,7 +203,7 @@ public class MinifigController : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = Minifig.GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         // Initialise animation.
