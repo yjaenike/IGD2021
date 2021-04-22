@@ -297,35 +297,6 @@ public class MinifigController : MonoBehaviour
                 jumpsInAir = maxJumpsInAir;
             }
 
-            //// Check if player is jumping.
-            //if (Input.GetButtonDown("Jump"))
-            //{
-            //    if (!airborne || jumpsInAir > 0)
-            //    {
-            //        if (airborne)
-            //        {
-            //            jumpsInAir--;
-
-            //            if (doubleJumpAudioClip)
-            //            {
-            //                audioSource.PlayOneShot(doubleJumpAudioClip);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (jumpAudioClip)
-            //            {
-            //                audioSource.PlayOneShot(jumpAudioClip);
-            //            }
-            //        }
-
-            //        moveDelta.y = jumpSpeed;
-            //        animator.SetTrigger(jumpHash);
-
-            //        airborne = true;
-            //        airborneTime = coyoteDelay;
-            //    }
-            //}
 
             // Cancel special.
             cancelSpecial = !Mathf.Approximately(Input.GetAxis("Vertical"), 0) || !Mathf.Approximately(Input.GetAxis("Horizontal"), 0) || Input.GetButtonDown("Jump");
