@@ -30,7 +30,7 @@ public class PlayerDetection : MonoBehaviour
 
         CalculateNewState();
         SetStateDependentColor();
-        //SetStateDependentPhysics();
+        SetStateDependentPhysics();
 
     }
 
